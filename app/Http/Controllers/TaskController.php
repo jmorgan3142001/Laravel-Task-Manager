@@ -10,11 +10,6 @@ class TaskController extends Controller
     
     public function index()
     {
-        // $task = new Task();
-        // $task->name = 'Task 1';
-        // $task->priority = '1';
-        // $task->save();
-
         $tasks = Task::orderBy('priority')->get();
     
         return view('tasks.index', ['tasks' => $tasks]);
@@ -60,7 +55,8 @@ class TaskController extends Controller
     
     public function reorder(Request $request)
     {
-        $tasks = $request->input('tasks');
+        $tasks = Task::orderBy('priority')->get();        
+        
         foreach ($tasks as $index => $taskId) {
             $task = Task::find($taskId);
             if ($task) {
@@ -69,6 +65,6 @@ class TaskController extends Controller
             }
         }
     
-        return response()->json(['success' => true]);
+        return redirect('/');
     }
 }
